@@ -1,25 +1,36 @@
-app.controller('HomeController', function($scope,$http){
+app.controller('HomeController', function($scope, movieService, $routeParams) {
 
-$scope.view = {};
-$scope.view.message = "This shows all the movies."
-
-$scope.getMovies = function(data){
-
-  var search = data.title;
-$http.get(`http://www.omdbapi.com/?t=${search}`).then(function(data){
-  console.log("search", search);
-  $scope.view.omdb = data;
-  console.log('data',data);
-
-});
-};
-
-});
+    $scope.view = {};
+    $scope.view.message = "This shows all the movies."
+    $scope.getMovies = function(movie) {
+        movieService.allMovies(movie).then(function(results) {
+            $scope.view.omdb = results
+        })
+    };
+        var id = $routeParams.id
+        movieService.oneMovie(id).then(function(results) {
+            // $scope.view.omdb = results
+            console.log('results:', results);
+        })
+}); //end of controller
 
 
-app.controller('ShowPageController', function($scope){
-  $scope.view = {};
-  $scope.view.message = "This shows a single movie"
+app.service("movieService", function($http){
+ //all movies
 
-
-});
+  return {
+    allMovies: function(movie){
+      console.log(movie);
+    return  $http.get(`http://www.omdbapi.com/?s=${movie.title}`).then(function(data){
+        console.log(data.data.Search);
+          return data.data.Search
+      })
+    },
+    oneMovie: function(id) {
+      console.log('id:', id);
+      return $http.get(`http://www.omdbapi.com/?i=${id}`).then(function(data) {
+        console.log('data:', data);
+      })
+    }
+  } //end of return bracket
+})

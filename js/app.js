@@ -6,8 +6,8 @@ app.config(function($routeProvider) {
         templateUrl: 'partials/home.html',
         controller: 'HomeController'
       })
-      .when('/show_page', {
+      .when('/show_page/:id', {
         templateUrl: 'partials/show_page.html',
-        controller: 'ShowPageController'
+        controller: 'HomeController'
       })
 });
