@@ -1,3 +1,7 @@
 <p>This is the home template</p>
+<form name="getMovie" ng-submit="getMovies(movie)">
+<label for="title" >Title: </label>
+<input type="text" id="title" name="title" ng-model="movie.title" class="validate" required>
+</form>
 
 <p>Message: {{view.message}}</p>

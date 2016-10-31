@@ -3,10 +3,16 @@ app.controller('HomeController', function($scope,$http){
 $scope.view = {};
 $scope.view.message = "This shows all the movies."
 
-$http.get('/http://www.omdbapi.com/t=').then(function(data){
-  $scope.view.omdb = data.data;
-  // $scope.view.results = data.data.results
+$scope.getMovies = function(data){
+
+  var search = data.title;
+$http.get(`http://www.omdbapi.com/?t=${search}`).then(function(data){
+  console.log("search", search);
+  $scope.view.omdb = data;
+  console.log('data',data);
+
 });
+};
 
 });
 
@@ -14,8 +20,6 @@ $http.get('/http://www.omdbapi.com/t=').then(function(data){
 app.controller('ShowPageController', function($scope){
   $scope.view = {};
   $scope.view.message = "This shows a single movie"
-
-
 
 
 });
